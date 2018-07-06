@@ -47,7 +47,6 @@
       <ons-splitter id="appSplitter">
         <ons-splitter-side id="sidemenu" page="sidemenu.html" swipeable side="right" collapse="" width="260px"></ons-splitter-side>
         <ons-splitter-content page="tabbar.html"></ons-splitter-content>
-        
       </ons-splitter>
     </ons-page>
   </ons-navigator>
@@ -205,7 +204,7 @@
       <div class="title"><ons-icon icon="ion-bonfire" size="30px" fixed-width="true"></ons-icon>交流</div>
       <div class="content">the data report.</div>
     </ons-card>
-    <ons-card onclick="fn.pushPage({'id': 'progress.html', 'title': 'Progress'})">
+    <ons-card onclick="fn.pushPage({'id': 'report.html', 'title': 'Progress'})">
       <div class="title"><ons-icon icon="ion-pie-graph" size="30px" fixed-width="true"></ons-icon>レポート</div>
       <div class="content">the data report.</div>
     </ons-card>
@@ -231,7 +230,7 @@
 </template>
  <!--　目標と記録　ページ　-->
 <template id="target.html">
-  <ons-page id="forms-page">
+  <ons-page id="target-page">
     <ons-card onclick="fn.pushPage({'id': 'keju.html', 'title': '目標設定'})">
       <div class="title"><i class="fas fa-bullseye" size="5x"></i> 目標設定</div>
       <div class="content"><p id="target_p">運動時間の目標設定.</p></div>
@@ -243,7 +242,8 @@
     <ons-list-header>設定した目標</ons-list-header>
     <ons-list-item>
       <div>
-　　　　　<ons-list id="pending-list">
+        <ons-list id="pending-list">
+          <p id="test"></p>
         </ons-list>
       </div>
     </ons-list-item>
@@ -264,22 +264,28 @@
         color: #666;
       }
     </style>
+
+    <script>
+      document.querySelector("test").innerHTML = page.data.target_date;
+    </script>
   </ons-page>
 </template>
 
 <!-- mypage -->
 <template id="mypage.html">
   <ons-page> 
-        <ons-card style="height:140px" onclick="fn.pushPage({'id': 'baseData.html', 'title': '基本情報'})">
+        <ons-card style="height:100px" onclick="fn.pushPage({'id': 'baseData.html', 'title': '基本情報'})">
           <ons-list-item style="height:80px">
             <div class="left">
               <img src="https://placekitten.com/200/300" style="width:80px;height:80px">
             </div>
-            <div class="center" style="padding-left:25%">
+            <div class="center" style="padding-left:5%">
               <p class="card_01" style="font-size:40px">未登録</p>
             </div>
           </ons-list-item>
-          <div class="center" style="padding-left:20px；"><p class="card_02" style="text-align:center">未登録</p></div>
+        </ons-card>
+        <ons-card style="height:50px" onclick="fn.pushPage({'id': 'changeData.html', 'title': '基本情報'})">
+          <div class="center" style="padding-left:20px"><p class="card_02" style="text-align:center;margin-top:-15px">未登録</p></div>
         </ons-card>
   
 
@@ -288,31 +294,31 @@
         <ons-list-item style="width: 350px;display: inline-block;background-color:#FFF ">
           <p>
             <div style="width:14%">
-              <p style="text-align : center">1</p>
+              <p style="text-align : center">月</p>
               <ons-progress-circular value="20" secondary-value="50"></ons-progress-circular>
             </div>
             <div style="width:14%">
-              <p style="text-align : center">2</p>
+              <p style="text-align : center">火</p>
               <ons-progress-circular value="20" secondary-value="50"></ons-progress-circular>
             </div>
             <div style="width:14%">
-              <p style="text-align : center">3</p>
+              <p style="text-align : center">水</p>
               <ons-progress-circular value="20" secondary-value="50"></ons-progress-circular>
             </div>
             <div style="width:14%">
-              <p style="text-align : center">4</p>
+              <p style="text-align : center">木</p>
               <ons-progress-circular value="20" secondary-value="50"></ons-progress-circular>
             </div>
             <div style="width:14%">
-              <p style="text-align : center">5</p>
+              <p style="text-align : center">金</p>
               <ons-progress-circular value="20" secondary-value="50"></ons-progress-circular>
             </div>
             <div style="width:14%">
-              <p style="text-align : center">6</p>
+              <p style="text-align : center">土</p>
               <ons-progress-circular value="20" secondary-value="50"></ons-progress-circular>
             </div>
             <div style="width:14%">
-              <p style="text-align : center">7</p>
+              <p style="text-align : center">日</p>
               <ons-progress-circular value="20" secondary-value="50"></ons-progress-circular>
             </div>
           </p>
@@ -379,13 +385,15 @@
                      .then(function(results){
                             for (var i = 0; i < results.length; i++) {
                               var object = results[i];
+                              var objectId = object.get("objectId");
                               var username = object.get("userName");
                               var sex = object.get("sex");
                               var birthday = object.get("Birthday");
                               var height = object.get("height");
                               var weight = object.get("weight");
                             }
-                        
+
+                            localStorage.setItem("objectId",objectId);
                             localStorage.setItem("Username",username);
                             localStorage.setItem("Sex",sex);
                             localStorage.setItem("Birthday",birthday);
@@ -400,30 +408,11 @@
                      .catch(function(err){
                           console.log(err);
                       });
-
       });
     </script>
   </ons-page>
 </template>
 
-<template id="transition.html">
-  <ons-page>
-    <ons-toolbar>
-      <div class="left">
-        <ons-back-button>Back</ons-back-button>
-      </div>
-      <div class="center"></div>
-    </ons-toolbar>
-    <p style="text-align: center">
-      Use the VOnsBackButton
-    </p>
-    <script>
-      ons.getScriptPage().onInit = function () {
-        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
-      }
-    </script>
-  </ons-page>
-</template>
 <!-- 登録ページ -->
 <template id="loginUp.html">
   <ons-page>
@@ -508,27 +497,27 @@
             var sex_text = '女性'; 
           }
           if(username.indexOf(" ") >= 0 || username == ""){
-            alert("ユーザー名が入力されていません");
+            ons.notification.alert("ユーザー名が入力されていません");
             return;
           } else if ( password.indexOf(" ") >= 0 || password == ""){
-            alert("パスワードが入力されていません");
+            ons.notification.alert("パスワードが入力されていません");
             return;
           } else if( email.indexOf(" ") >= 0 || email == ""){
-            alert("メールアドレスが入力されていません");
+            ons.notification.alert("メールアドレスが入力されていません");
             return;
           } else if(!email.match(regm)){
-            alert("メールアドレスの様式が間違います");
+            ons.notification.alert("メールアドレスの様式が間違います");
           } else if( sex == ""){
-            alert("性別が選択されていません");
+            ons.notification.alert("性別が選択されていません");
             return;
           } else if( birthday == ""){
-            alert("生年月日が入力されていません");
+            ons.notification.alert("生年月日が入力されていません");
             return;
           } else if( height == ""){
-            alert("身長が入力されていません");
+            ons.notification.alert("身長が入力されていません");
             return;
           } else if( weight == ""){
-            alert("体重が入力されていません");
+            ons.notification.alert("体重が入力されていません");
             return;
           } else { 
               var ncmb = new NCMB("dd411920ff7852038a3d55414c3447b88c5e842ace7268254078b113d065398c","23304def33b24aeed4fe1ae5325a77c1ffbe3e44067c0a3716b47aefd4297e05");
@@ -547,11 +536,11 @@
                      localStorage.setItem("UserName", username);
                      save_objectId();
                      fn.pushPage({'id': 'mypage.html', 'title': '基本情報'}, 'fade-ios');
-                     alert("登録済み");
+                     ons.notification.alert("登録済み");
                   })
                   .catch(function(err){
                     // 保存に失敗した場合の処理
-                    alert("登録失敗");
+                    ons.notification.alert("登録失敗");
                     return;
                   });
           }
@@ -717,9 +706,107 @@
       </script>
     </ons-page>
 </template>
-
-<template id="keju.html">
+<!-- 体重修正ページ -->
+<template id="changeData.html">
   <ons-page>
+    <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">体重と身長修正</div>
+    </ons-toolbar>
+      <br/>
+    <div style="background-color: #fff;">
+    <ons-list-header>現在の身長　 -　 <span id="checkboxes-header1"></span>(cm)</ons-list-header>
+    <ons-list-item>
+        <p ></p>
+      <ons-row>
+        <ons-col>
+          <ons-range id="range-slider1" min="100" max="250" style="width: 100%;"></ons-range>
+        </ons-col>
+      </ons-row>
+    </ons-list-item>
+    <ons-list-header> 現在の体重　 -　 <span id="checkboxes-header2"></span>(kg)</ons-list-header>
+    <ons-list-item>
+      <p ></p>
+      <ons-row>
+        <ons-col>
+          <ons-range id="range-slider2" min="30" max="150" style="width: 100%;"></ons-range>
+        </ons-col>
+      </ons-row>
+    </ons-list-item>
+    <p style="text-align: center">
+      <ons-button id="update-data" style=" width: 100px" modifier="material" onclick="save()">修正</ons-button>
+   </p>
+
+  <script>
+    ons.ready(function() {
+      
+    });
+    var objectId = localStorage.getItem("objectId");
+    var height = localStorage.getItem("Height");
+    var weight = localStorage.getItem("Weight");
+    var new_height;
+    var new_weight;
+      
+    var c_height= document.getElementById('range-slider1');
+    c_height.value = height;
+    document.getElementById('checkboxes-header1').innerHTML = height;
+    var c_weight= document.getElementById('range-slider2');
+    c_weight.value = weight;
+    document.getElementById('checkboxes-header2').innerHTML = weight;
+
+    document.getElementById('range-slider1').addEventListener('input', function (event) {
+      //document.getElementById('volume-value').innerHTML = `&nbsp;${event.target.value}`;
+      document.getElementById('checkboxes-header1').innerHTML = event.target.value;
+      new_height = event.target.value;
+    })
+    document.getElementById('range-slider2').addEventListener('input', function (event) {
+      //document.getElementById('volume-value').innerHTML = `&nbsp;${event.target.value}`;
+      document.getElementById('checkboxes-header2').innerHTML = event.target.value;
+      new_weight = event.target.value;
+    })
+
+    function save(){
+      if( height ===  new_height){
+        console.log('変化がありません。');
+      }　else if( weight ===  new_weight){
+        console.log('変化がありません。');
+      } else {
+        save_data();
+      }
+    }
+
+    function save_data(){
+      console.log(objectId);
+      console.log(new_weight);
+      var ncmb = new NCMB("dd411920ff7852038a3d55414c3447b88c5e842ace7268254078b113d065398c","23304def33b24aeed4fe1ae5325a77c1ffbe3e44067c0a3716b47aefd4297e05");
+      var user = new ncmb.User();
+      user.set("objectId", objectId)
+          .set("height", new_height)
+          .set("weight", new_weight)
+          .update()
+          .then(function(data){
+            // 更新に成功した場合の処理
+            ons.notification.alert("更新済み");
+            //localStorage.setItem("Height",height);
+            //localStorage.setItem("Weight",weight);
+            location.reload();
+          })
+          .catch(function(err){
+            // 更新に失敗した場合の処理
+            ons.notification.alert("更新失敗");
+            return;
+          });
+      
+    }
+  
+
+  </script>
+  </ons-page>
+</template>
+
+ <!-- 目標入力ページ -->
+<template id="keju.html">
+  <ons-page id="target_set">
     <ons-toolbar> 
       <div class="left"><ons-back-button>戻り</ons-back-button></div>
       <div class="center" >目標設定</div>
@@ -768,9 +855,9 @@
     </ons-list-item>
     </div>
     <p style="text-align:center">
-      <button onClick={showProfile()} class="button--large--cta" style="width: 95%; margin: 0 auto;">完了</button>                         
+      <ons-button onclick="showProfile()" style="width: 95%; margin: 0 auto;">目標設定</button>                         
+      </ons-button>
     </p>   
-
     <script>
       function showProfile(){
         var ncmb = new NCMB("dd411920ff7852038a3d55414c3447b88c5e842ace7268254078b113d065398c","23304def33b24aeed4fe1ae5325a77c1ffbe3e44067c0a3716b47aefd4297e05");
@@ -781,14 +868,14 @@
         var time =document.getElementById("user_time").value;
         var sport =document.getElementById("user_sport").value;
         var target =document.getElementById("user_target").value;
-       // document.getElementById('box').innerHTML = date+"まで"+time+objectId+number+list+sport+"をやります。"+"意気込み:"+target;
-                 //alert(date+"まで"+time+number+list+sport+"をやります。"+"意気込み:"+target);
+          //document.getElementById('box').innerHTML = date+"まで"+time+objectId+number+list+sport+"をやります。"+"意気込み:"+target;
+          //ons.notification.alert(date+"まで"+time+number+list+sport+"をやります。"+"意気込み:"+target);
                 
         if ( document.getElementById("user_number").value ==""){ 
-            alert('単位入力してください。');   
+            ons.notification.alert('単位入力してください。');   
             return false;  
          } else if( document.getElementById("user_date").value ==""){ 
-            alert('時間入力してください。');   
+            ons.notification.alert('時間入力してください。');   
             return false;  
          } else {
            var targetClass = ncmb.DataStore("targetClass");
@@ -803,13 +890,15 @@
                     .save()
                     .then(function(res){
                            // 保存に成功した場合の処理
-                       alert("成功");
+                       ons.notification.alert("成功");
+                       fn.pushPage({'id': 'target.html'},{data:{target_date: user_date}});
+                       //document.getElementById('appNavigator').pushPage("target.html",{data{target_date: user_date});
                     })
                     .catch(function(err){
                       // 保存に失敗した場合の処理
                     });
           document.getElementById('box').innerHTML = date+"まで",objectId+time+number+list+sport+"をやります。"+"意気込み:"+target;
-                 //alert(date+"まで"+time+number+list+sport+"をやります。"+"意気込み:"+target);
+                 //ons.notification.alert(date+"まで"+time+number+list+sport+"をやります。"+"意気込み:"+target);
          }
   
         
@@ -818,65 +907,86 @@
     </script>
   </ons-page>
 </template>
-
+  <!-- 実績記録ページ -->
 <template id="koyanagi.html">
-  <ons-page>
+  <ons-page id="per_input">
     <ons-toolbar>
       <div class="left"><ons-back-button>戻り</ons-back-button></div>
       <div class="center">実績記録</div>
     </ons-toolbar>
     <div style="background-color:#fff">
-      <form name="track_form" action="koyanagi.html">
-　　　　　<ons-list-header style="font-size:15px">運動した日を選択してください。</ons-list-header>
-        <ons-list-item>
-          <ons-input type="date" name="date" value="日付を入力してください"></ons-input>
-        </ons-list-item>
-        <ons-list-header style="font-size:15px">運動の種類を記録してください。</ons-list-header>
-        <ons-list-item>
-        <ons-select name="tipe_of_sports" required>
-          <option value="ランニング">ランニング</option>
-          <option value="ウォーキング">ウォーキング</option>
-          <option value="ラジオ体操">ラジオ体操</option>
-          <option value="自転車">自転車</option>
-          <option value="バドミントン">バドミントン</option>
-          <option value="野球">野球</option>
-          <option value="ヨガ">ヨガ</option>
-          <option value="テニス">テニス</option>
-          <option value="水泳">水泳</option>
-          <option value="ゴルフ">ゴルフ</option>
+       <!-- <ons-list-header style="font-size:15px">運動した日を選択してください。</ons-list-header>
+      <ons-list-item>
+        <ons-input type="date" id="per_date" name="date" value="日付を入力してください"></ons-input>
+      </ons-list-item> -->
+      <ons-list-header style="font-size:15px">曜日を選択してください。</ons-list-header>
+      <ons-list-item>
+        <ons-select id="per_week" required>
+          <option>月曜日</option>
+          <option>火曜日</option>
+          <option>水曜日</option>
+          <option>木曜日</option>
+          <option>金曜日</option>
+          <option>土曜日</option>
+          <option>日曜日</option>
         </ons-select>
-        </ons-list-item>
-        <ons-list-header style="font-size:15px">運動の時間を記録してください。</ons-list-header>
-        <ons-list-item>
-          <ons-input type="number" min="0" name="times" value="60" style="width: 50px;"></ons-input>分
-        </ons-list-item>
-    </form>
+      </ons-list-item>
+      <ons-list-header style="font-size:15px">運動の種類を記録してください。</ons-list-header>
+      <ons-list-item>
+        <ons-select id="per_sport" name="tipe_of_sports" required>
+          <option>ランニング</option>
+          <option>ウォーキング</option>
+          <option>ラジオ体操</option>
+          <option>自転車</option>
+          <option>バドミントン</option>
+          <option>野球</option>
+          <option>ヨガ</option>
+          <option>テニス</option>
+          <option>水泳</option>
+          <option>ゴルフ</option>
+        </ons-select>
+      </ons-list-item>
+      <ons-list-header style="font-size:15px">運動の時間を記録してください。</ons-list-header>
+      <ons-list-item>
+        <ons-input id="per_time" type="number" min="0" max="1000" name="times" value="60" style="width: 50px;"></ons-input>分
+      </ons-list-item>
     </div>
-      <p style="text-align:center">
-        <ons-button modifier="track()" style="">記録する</ons-button>
-      </p>
+    <p style="text-align:center">
+      <ons-button onclick="onTrack()">記録する</ons-button>
+    </p>
 
     <script>
-      function track(){
-        var date = track_form.date.value; //get date from track form
-        var tipe_of_sports = track_form.tipe_of_sports.value; //get tipe of sports from track form
-        var times = track_form.times.value;//get times from track form
-         
+      function onTrack(){
+        //var per_date =document.getElementById("per_date").value;
+        var per_week =document.getElementById("per_week").value;
+        var per_sport =document.getElementById("per_sport").value;
+        var per_time =document.getElementById("per_time").value;
+        var username = localStorage.getItem("Username");
         //DB
         var ncmb = new NCMB("dd411920ff7852038a3d55414c3447b88c5e842ace7268254078b113d065398c","23304def33b24aeed4fe1ae5325a77c1ffbe3e44067c0a3716b47aefd4297e05");
-        var Records = ncmb.DataStore('Records');
-        var results = new results();
-
-        Results.set("data")
-              .set("tipe_of_sports")
-              .set("times")
-              .save()
-              .then(function(results){
-                alart("実績を記録しました。");
-              })
-         .catch(function(err){
-                alart("入力内容が正しくありません。");
-              });
+        var recordsClass = ncmb.DataStore('recordsClass');
+        var recordsClass = new recordsClass();
+        //if (per_date === null){
+        //ons.notification.alert("期日が入力されていません");
+        //} else
+       　if (per_time.indexOf(" ") >= 0 ||per_time === null){
+          ons.notification.alert("時間が入力されていません");
+        } else {
+          recordsClass.set("Username",username)
+                      //.set("Date",per_date)
+                      .set("Week",per_week)
+                      .set("Sport",per_sport)
+                      .set("Time",per_time)
+                      .save()
+                      .then(function(results){
+                        ons.notification.alert("実績を記録しました。");
+                        fn.pushPage({'id': 'target.html'});
+                      })
+                      .catch(function(err){
+                        ons.notification.alert("実績を記録エラー");
+                      });
+        }
+      }
     </script>
   </ons-page>
 </template>
